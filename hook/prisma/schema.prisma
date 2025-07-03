@@ -21,8 +21,23 @@ model User {
   password String
 }
 
+model Action {
+  id String @id @default(uuid())
+  zapId String
+  actionId String
+  zap Zap @relation(fields: [zapId], references: [id])
+  type AvailableActions @relation(fields: [actionId], references: [id])
+}
+
+model AvailableActions {
+  id String @id @default(uuid())
+  name String
+  actions Action[]
+}
+
 model Zap {
   id String @id @default(uuid())
+  actions Action[]
   trigger Trigger?
 }
 
